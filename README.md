@@ -11,3 +11,7 @@ This is a bulk email sending service that sends email at a particular time set b
 - `git clone https://github.com/xyluz/php_queue_e.git`
 - `cd php_queue_e`
 - Spin off your development server
+
+<p align="center">
+  <img src="screenshot.jpg" width="100%" alt="bulk email screenshot" title="image sample">
+</p>
