@@ -12,6 +12,9 @@ This is a bulk email sending service that sends email at a particular time set b
 - `cd php_queue_e`
 - Spin off your development server
 
+## Live test
+- Try out the service [here](https://lunikdata.com/email-queue/)
+
 <p align="center">
   <img src="screenshot.jpg" width="100%" alt="bulk email screenshot" title="image sample">
 </p>
