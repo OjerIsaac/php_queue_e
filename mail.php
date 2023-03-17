@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {
         switch ($_POST['timeSent']) {
             case 'now':
                 $time = 1;
+                $timer = date('Y-m-d H:i:s');
                 break;
             case '5mins':
                 $timer = '5mins';
@@ -47,7 +48,7 @@ if (isset($_POST['submit'])) {
             // generate unique id
             $code = $user->generate_uuid();
             // add to queue
-            $email_job = $user->addEmail($_POST['emails'], $_POST['senderEmail'], $_POST['senderName'], $_POST['message'], $_POST['subject'], $time, $code);
+            $email_job = $user->addEmail($_POST['emails'], $_POST['senderEmail'], $_POST['senderName'], $_POST['message'], $_POST['subject'], $timer, $code);
             if ($email_job) {
                 // send mails
                 $send_email = $user->sendEmail($code);

@@ -12,9 +12,9 @@ session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../PHPMailer/src/Exception.php';
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
 
 class User
 {
@@ -31,7 +31,7 @@ class User
     $this->db = $this->db->connect();
     $this->mail = new PHPMailer(true);
     $this->mail->isSMTP();
-    $this->mail->Host = 'falconlite.com';
+    $this->mail->Host = 'lunikdata.com'; 
     $this->mail->SMTPAuth = true;
     $this->mail->Username = $_ENV['USERNAME'];
     $this->mail->Password = $_ENV['PASSWORD'];
@@ -71,10 +71,6 @@ class User
   public function addEmail($emails, $from_email, $name, $message, $subject, $time, $code)
   {
     foreach ($emails as $email) {
-      if ($time == 1)
-      {
-        $time = date('Y-m-d H:i:s');
-      }
       $null = 0;
       $sql = "INSERT INTO emails (email_address, from_email, name, message, subject, unique_ids, schedule_time, is_job, date)" . "VALUES (?,?,?,?,?,?,?,?,?)";
       $stmt = $this->db->prepare($sql);
@@ -97,7 +93,7 @@ class User
     // Loop through the emails and send the email to each recipient
     foreach ($emails as $emailAddress) {
       try {
-        $this->mail->setFrom('info@falconlite.com', $rows['name']);
+        $this->mail->setFrom($rows['from_email'], $rows['name']);
         $this->mail->addAddress($emailAddress);
         $this->mail->isHTML(true);
         $this->mail->Subject = $rows['subject'];
@@ -203,7 +199,7 @@ class User
     // Loop through the emails and send the email to each recipient
     foreach ($emails as $emailAddress) {
       try {
-        $this->mail->setFrom('info@falconlite.com', $rows['name']);
+        $this->mail->setFrom($rows['from_email'], $rows['name']);
         $this->mail->addAddress($emailAddress);
         $this->mail->isHTML(true);
         $this->mail->Subject = $rows['subject'];
