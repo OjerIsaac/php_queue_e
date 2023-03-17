@@ -91,8 +91,8 @@ if (empty($emails)) {
                 type: 'post',
                 success: function(data) {
                     // Perform operation on return value
-                    alert(data);
-                    // window.location = 'send-email';
+                    // alert(data);
+                    window.location = 'admin';
                     console.log(data)
                 },
                 complete: function(data) {

@@ -198,6 +198,7 @@ class User
     $emails = explode(",", $rows['email_address']);
     // print_r($emails); exit;
     $uuid = $rows['unique_ids'];
+    $this->updateJob($uuid);
 
     // Loop through the emails and send the email to each recipient
     foreach ($emails as $emailAddress) {
@@ -214,7 +215,8 @@ class User
         return false;
       }
     }
-    return $this->updateJob($uuid);
+    
+    return true;
   }
 
   /**
