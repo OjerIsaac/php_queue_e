@@ -25,15 +25,19 @@ if (isset($_POST['submit'])) {
                 break;
             case '5mins':
                 $time = 2;
+                $timer = '5mins';
                 break;
             case '10mins':
                 $time = 3;
+                $timer = '10mins';
                 break;
             case '30mins':
                 $time = 4;
+                $timer = '30mins';
                 break;
             case '1hr':
                 $time = 5;
+                $timer = '1hr';
                 break;
             default:
                 $time = 1;
@@ -54,19 +58,30 @@ if (isset($_POST['submit'])) {
                     echo "setTimeout(function() {
                         window.location.href = 'send-email';";
                     echo "}, 3500);</script>";
+                    // update job
+                    $user->updateJob($code);
                 } else {
                     //TODO: Add to queue
                     $message = '<div style="width: fit-content; margin: 1.2rem auto; color: red;">Something went wrong, emails could not be sent. We would try again in 30secs</div>';
+                    echo "<script type='text/javascript'>";
+                    echo "setTimeout(function() {
+                        window.location.href = 'send-email';";
+                    echo "}, 3500);</script>";
                 }
             } else {
                 //TODO: Add to queue
                 $message = '<div style="width: fit-content; margin: 1.2rem auto; color: red;">Something went wrong, emails could not be uploaded. We would try again in 30secs</div>';
+                echo "<script type='text/javascript'>";
+                echo "setTimeout(function() {
+                        window.location.href = 'send-email';";
+                echo "}, 3500);</script>";
             }
         } else {
             // generate unique id
             $code = $user->generate_uuid();
             // add to queue
             $email_job = $user->addEmail($_POST['emails'], $_POST['senderEmail'], $_POST['senderName'], $_POST['message'], $_POST['subject'], $time, $code);
+            $message = "<div style='width: fit-content; margin: 1.2rem auto; color: 43A047;'>Emails would be sent in $timer</div>";
         }
     } else {
         $message = '<div style="width: fit-content; margin: 1.2rem auto; color: red;">This fields ' . implode(', ', $empty_fields) . ' cannot be empty</div>';
@@ -140,6 +155,25 @@ if (isset($_POST['submit'])) {
             });
             // Hide loader image
             $('#loader').hide();
+        });
+
+        function fetchdata(){
+            $.ajax({
+                url: 'email-queue.php',
+                type: 'post',
+                success: function(data){
+                    // Perform operation on return value
+                    // alert(data);
+                    // window.location = 'send-email';
+                },
+                complete:function(data){
+                    setTimeout(fetchdata, 300000); // 300000 milliseconds is 5 minutes
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            setTimeout(fetchdata, 300000);
         });
     </script>
 </body>

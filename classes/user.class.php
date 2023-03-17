@@ -31,7 +31,7 @@ class User
     $this->db = $this->db->connect();
     $this->mail = new PHPMailer(true);
     $this->mail->isSMTP();
-    $this->mail->Host = 'lunikdata.com'; 
+    $this->mail->Host = 'falconlite.com'; 
     $this->mail->SMTPAuth = true;
     $this->mail->Username = $_ENV['USERNAME'];
     $this->mail->Password = $_ENV['PASSWORD'];
@@ -91,7 +91,7 @@ class User
     // Loop through the emails and send the email to each recipient
     foreach ($emails as $emailAddress) {
       try {
-        $this->mail->setFrom($rows['from_email'], $rows['name']);
+        $this->mail->setFrom('info@falconlite.com', $rows['name']);
         $this->mail->addAddress($emailAddress);
         $this->mail->isHTML(true);
         $this->mail->Subject = $rows['subject'];
@@ -122,6 +122,45 @@ class User
     if ($count_row == 1) {
       return $stmt;
     }
+  }
+
+  /**
+   * @param mixed $code
+   * @return true
+   */
+  public function updateJob($code) {
+    $query = "UPDATE emails SET is_job = ? WHERE unique_ids = ?";
+    $stmt = $this->db->prepare($query);
+    $values = array('1', $code);
+    $stmt->execute($values);
+
+    return true;
+  }
+
+  /**
+   * @return \PDOStatement|false|void
+   */
+  public function getQueuedEmails()
+  {
+    $sql = "SELECT * from emails";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([]);
+
+    $count_row = $stmt->rowCount();
+
+    if ($count_row > 0) {
+      return $stmt;
+    }
+  }
+
+  /**
+   * @param mixed $x
+   * @return string
+   */
+  public function getFutureTime($x)
+  {
+    $future_time = date('H:i:s', strtotime('+'.$x.' minutes'));
+    return $future_time;
   }
 
 }
