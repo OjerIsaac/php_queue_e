@@ -24,23 +24,23 @@ if (isset($_POST['submit'])) {
                 $time = 1;
                 break;
             case '5mins':
-                $time = 2;
                 $timer = '5mins';
+                $time = $user->getFutureTime(5);
                 break;
             case '10mins':
-                $time = 3;
+                $time = $user->getFutureTime(10);
                 $timer = '10mins';
                 break;
             case '30mins':
-                $time = 4;
+                $time = $user->getFutureTime(30);
                 $timer = '30mins';
                 break;
             case '1hr':
-                $time = 5;
+                $time = $user->getFutureTime(60);
                 $timer = '1hr';
                 break;
             default:
-                $time = 1;
+                $time = date('Y-m-d H:i:s');
                 break;
         }
         if ($time == 1) {
@@ -155,25 +155,6 @@ if (isset($_POST['submit'])) {
             });
             // Hide loader image
             $('#loader').hide();
-        });
-
-        function fetchdata(){
-            $.ajax({
-                url: 'email-queue.php',
-                type: 'post',
-                success: function(data){
-                    // Perform operation on return value
-                    // alert(data);
-                    // window.location = 'send-email';
-                },
-                complete:function(data){
-                    setTimeout(fetchdata, 300000); // 300000 milliseconds is 5 minutes
-                }
-            });
-        }
-
-        $(document).ready(function(){
-            setTimeout(fetchdata, 300000);
         });
     </script>
 </body>

@@ -4,6 +4,11 @@ require_once "./classes/user.class.php";
 
 $user = new User();
 $emails = $user->getQueuedEmails();
+if (empty($emails)) {
+  header('location: send-email');
+} else {
+ $xx = $emails;
+}
 
 ?>
 
@@ -39,30 +44,7 @@ $emails = $user->getQueuedEmails();
                         <tbody>
 
                             <?php
-                            foreach ($emails as $email) : ?>
-
-                            <?php 
-                                switch ($email['schedule_time']) {
-                                    case 1:
-                                        $schedule = '&#9989';
-                                        break;
-                                    case 2:
-                                        $schedule = $user->getFutureTime(5);
-                                        break;
-                                    case 3:
-                                        $schedule = $user->getFutureTime(10);
-                                        break;
-                                    case 4:
-                                        $schedule = $user->getFutureTime(30);
-                                        break;
-                                    case 5:
-                                        $schedule = $user->getFutureTime(60);
-                                        break;
-                                    default:
-                                        $schedule = '&#10067';
-                                        break;
-                                }
-                            ?>
+                            foreach ($xx as $email) : ?>
 
                                 <tr>
                                     <td> <?php echo $email['email_address']; ?> </td>
@@ -70,7 +52,7 @@ $emails = $user->getQueuedEmails();
                                     <td> <?php echo $email['name']; ?> </td>
                                     <td> <?php echo $email['subject']; ?> </td>
                                     <td> <?php echo $email['message']; ?> </td>
-                                    <td> <?php echo $schedule; ?> </td>
+                                    <td> <?php echo $user->convertTimeFormat($email['schedule_time']); ?> </td>
                                     <td>
                                         <?php
                                         if ($email['is_job'] == 0) {
@@ -105,12 +87,13 @@ $emails = $user->getQueuedEmails();
 
         function fetchdata() {
             $.ajax({
-                url: 'email-queue.php',
+                url: 'queue.php',
                 type: 'post',
                 success: function(data) {
                     // Perform operation on return value
-                    // alert(data);
+                    alert(data);
                     // window.location = 'send-email';
+                    console.log(data)
                 },
                 complete: function(data) {
                     setTimeout(fetchdata, 300000); // 300000 milliseconds is 5 minutes
