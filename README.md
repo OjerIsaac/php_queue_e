@@ -17,7 +17,9 @@ This is a bulk email sending service that sends email at a particular time set b
 - View [logs](https://lunikdata.com/email-queue/admin)
 
 ## Notes
+- Verry crude, functionalities could be extened
 
+## Images
 
 <p align="center">
   <img src="screenshot.jpg" width="100%" alt="bulk email screenshot" title="image sample">
