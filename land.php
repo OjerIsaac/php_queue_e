@@ -93,10 +93,10 @@ if (empty($emails)) {
                     // Perform operation on return value
                     // alert(data);
                     window.location = 'admin';
-                    console.log(data)
+                    // console.log(data)
                 },
                 complete: function(data) {
-                    setTimeout(fetchdata, 300000); // 300000 milliseconds is 5 minutes
+                    setTimeout(fetchdata, 300000); // 300000 milliseconds is 5 minutes, yes
                 }
             });
         }
