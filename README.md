@@ -9,3 +9,6 @@ This is a bulk email sending service that sends email at a particular time set b
 ## Note
 ### Would we need a cron job to get the entire thing working?
 - The code here does not require a cron job to run, as it contains a main loop that continuously processes the email queue until it is empty.
+
+- A cron job can be setup on my setup on my server to run at 5minutes intervals
+- `*/5 * * * * /usr/bin/php /path/to/queue-system.php >/dev/null 2>&1`
