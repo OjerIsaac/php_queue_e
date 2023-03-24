@@ -81,7 +81,7 @@ class Queue
     /**
      * Define a function to send email using PHPMailer
      */
-    public function send_email(string $emailTo, string $emailSubject, string $emailMessage)
+    public function send_email(string $emailTo, string $emailSubject, string $emailMessage): bool
     {
         try {
             $this->mail->setFrom('info@lunikdata.com', 'Ticket Support');
