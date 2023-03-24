@@ -7,7 +7,7 @@ $__DotEnvironment = new DotEnvironment(realpath("./.env"));
 //reset the timezone default
 date_default_timezone_set('Africa/Lagos');
 
-session_start();
+// session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
